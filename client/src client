@@ -134,3 +134,43 @@ export const authService = {
 };
 
 export default api; 
+client/src/api/api.js
+import axios from 'axios';
+
+export const API = axios.create({ baseURL: import.meta.env.VITE_API_URL });
+
+export const fetchPosts = () => API.get('/posts');
+export const fetchPost = (id) => API.get(`/posts/${id}`);
+export const createPost = (data) => API.post('/posts', data);
+export const updatePost = (id, data) => API.put(`/posts/${id}`, data);
+export const deletePost = (id) => API.delete(`/posts/${id}`);
+export const fetchCategories = () => API.get('/categories');
+export const createCategory = (data) => API.post('/categories', data);
+
+// 📄 client/src/main.jsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import { BrowserRouter } from 'react-router-dom';
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
+
+// 📄 client/src/App.jsx
+import { Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import PostDetail from './pages/PostDetail';
+import EditPost from './pages/EditPost';
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path='/' element={<Home />} />
+      <Route path='/post/:id' element={<PostDetail />} />
+      <Route path='/edit/:id' element={<EditPost />} />
+    </Routes>
+  );
+  }
